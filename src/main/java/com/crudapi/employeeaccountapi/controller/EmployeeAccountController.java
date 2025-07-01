@@ -3,6 +3,7 @@ package com.crudapi.employeeaccountapi.controller;
 import com.crudapi.employeeaccountapi.model.EmployeeAccount;
 import com.crudapi.employeeaccountapi.repository.EmployeeAccountRepository;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,14 +38,14 @@ public class EmployeeAccountController {
 
     // POST - create new employee
     @PostMapping
-    public EmployeeAccount createEmployee(@RequestBody EmployeeAccount employee) {
+    public EmployeeAccount createEmployee(@Valid @RequestBody EmployeeAccount employee) {
         return repo.save(employee);
     }
 
     // PUT - update employee by custom employeeId
     @PutMapping("/employee/{employeeId}")
     public ResponseEntity<EmployeeAccount> updateEmployee(@PathVariable String employeeId,
-                                                          @RequestBody EmployeeAccount updatedEmployee) {
+                                                          @Valid @RequestBody EmployeeAccount updatedEmployee) {
         Optional<EmployeeAccount> existingEmployee = repo.findByEmployeeId(employeeId);
         if (existingEmployee.isPresent()) {
             EmployeeAccount employee = existingEmployee.get();
