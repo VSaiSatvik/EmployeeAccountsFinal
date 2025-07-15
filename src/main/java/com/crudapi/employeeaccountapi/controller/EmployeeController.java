@@ -21,13 +21,11 @@ public class EmployeeController {
         this.employeeRepo = employeeRepo;
     }
 
-    // GET all employees
     @GetMapping
     public ResponseEntity<?> getAllEmployees() {
         return ResponseEntity.ok(employeeRepo.findAll());
     }
 
-    // GET employee by employeeId (custom field)
     @GetMapping("/{employeeId}")
     public ResponseEntity<?> getEmployeeById(@PathVariable String employeeId) {
         Optional<Employee> employee = employeeRepo.findByEmployeeId(employeeId);
@@ -39,7 +37,6 @@ public class EmployeeController {
         }
     }
 
-    // POST - create employee with accounts
     @PostMapping
     public ResponseEntity<?> createEmployee(@Valid @RequestBody Employee employee) {
         if (employee.getAccounts() != null) {
@@ -51,7 +48,6 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    // PUT - update employee by employeeId
     @PutMapping("/{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable String employeeId,
                                             @Valid @RequestBody Employee updatedEmployee) {
@@ -76,7 +72,6 @@ public class EmployeeController {
         }
     }
 
-    // DELETE - remove employee by employeeId
     @DeleteMapping("/{employeeId}")
     public ResponseEntity<?> deleteEmployee(@PathVariable String employeeId) {
         Optional<Employee> optional = employeeRepo.findByEmployeeId(employeeId);
